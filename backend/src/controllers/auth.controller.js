@@ -20,8 +20,8 @@ async function registerUser(req, res) {
     const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET);
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+      secure: true,
+      sameSite: 'none',
     });
 
     logger.info('User registered successfully', { userId: user._id, email });
@@ -67,8 +67,8 @@ async function loginUser(req, res) {
     const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET);
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+      secure: true,
+      sameSite: 'none',
     });
 
     logger.info('User logged in successfully', { userId: user._id, email });
