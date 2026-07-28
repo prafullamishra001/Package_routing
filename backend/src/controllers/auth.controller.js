@@ -21,7 +21,7 @@ async function registerUser(req, res) {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
     });
 
     logger.info('User registered successfully', { userId: user._id, email });
@@ -68,7 +68,7 @@ async function loginUser(req, res) {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
     });
 
     logger.info('User logged in successfully', { userId: user._id, email });

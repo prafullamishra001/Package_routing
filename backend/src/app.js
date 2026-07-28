@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://package-routing.onrender.com',
+    'https://package-routing.vercel.app',
     process.env.FRONTEND_URL
   ].filter(Boolean),
   credentials: true,
