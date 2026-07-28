@@ -10,11 +10,8 @@ pnpm-debug.log*
 node_modules/
 **/node_modules/
 
-# Environment files
-.env
-.env.*
-**/.env
-**/.env.*
+# Environment files (keep .env for local development)
+.env.production
 
 # Build
 dist/
