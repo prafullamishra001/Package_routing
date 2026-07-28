@@ -2,7 +2,6 @@ const DEPARTMENTS = {
   MAIL: 'Mail Department',
   REGULAR: 'Regular Department',
   HEAVY: 'Heavy Department',
-  CUSTOMS: 'Customs Department',
 };
 
 const WEIGHT_LIMITS = {

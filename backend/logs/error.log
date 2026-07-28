@@ -1,0 +1,9 @@
+{"count":1,"ip":"::1","level":"error","message":"ALERT [WARNING]: Multiple authentication failures","recommendation":"Consider IP blocking if pattern continues","service":"parcel-routing","timestamp":"2026-07-28T08:16:54.774Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:22:01.003Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:23:46.781Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:24:12.629Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:25:32.939Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:27:56.721Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:28:15.368Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:29:36.586Z"}
+{"error":"Operation `users.findOne()` buffering timed out after 10000ms","level":"error","message":"Login error","service":"parcel-routing","timestamp":"2026-07-28T08:32:25.113Z"}

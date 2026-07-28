@@ -1,6 +1,7 @@
 const { parcelModel } = require('../models/post.model');
 const { routeParcel } = require('../services/routing.service');
 const logger = require('../utils/logger');
+const alerting = require('../utils/alerting');
 
 async function routeSingleParcel(req, res) {
   const { weight, value, destinationCountry } = req.body;
@@ -78,6 +79,7 @@ async function uploadBatchParcels(req, res) {
           status: 'success',
           parcelId: parcel._id,
           department: parcel.department,
+          insuranceRequired: parcel.insuranceRequired,
         });
       } catch (error) {
         results.failed++;
@@ -115,6 +117,22 @@ async function getRoutingHistory(req, res) {
   try {
     const filter = userRole === 'admin' ? {} : { routedBy: userId };
     const history = await parcelModel.find(filter).sort({ createdAt: -1 }).limit(100);
+
+    // Check for unusual routing patterns
+    if (userRole === 'admin' && history.length > 0) {
+      const departmentCounts = {};
+      history.forEach(parcel => {
+        departmentCounts[parcel.department] = (departmentCounts[parcel.department] || 0) + 1;
+      });
+
+      // Alert if any department has unusually high count
+      const expectedRange = [history.length * 0.2, history.length * 0.5]; // Expected 20-50% distribution
+      for (const [department, count] of Object.entries(departmentCounts)) {
+        if (count > expectedRange[1]) {
+          alerting.alertUnusualRoutingPattern(department, count, expectedRange);
+        }
+      }
+    }
 
     logger.info('Routing history retrieved', { userId, count: history.length });
 

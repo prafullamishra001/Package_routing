@@ -1,6 +1,7 @@
 const { userModel } = require('../models/post.model');
 const jwt = require('jsonwebtoken');
 const logger = require('../utils/logger');
+const alerting = require('../utils/alerting');
 
 async function registerUser(req, res) {
   const { username, email, password, role } = req.body;
@@ -16,7 +17,7 @@ async function registerUser(req, res) {
 
     const user = await userModel.create({ username, email, password, role });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET);
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -43,24 +44,27 @@ async function registerUser(req, res) {
 
 async function loginUser(req, res) {
   const { email, password } = req.body;
+  const ip = req.ip || req.connection.remoteAddress;
 
   try {
     const user = await userModel.findOne({ email });
     if (!user) {
-      logger.warn('Login failed: User not found', { email });
+      logger.warn('Login failed: User not found', { email, ip });
+      alerting.alertAuthenticationFailure(ip, 1);
       return res.status(401).json({
         message: 'Invalid credentials',
       });
     }
 
     if (user.password !== password) {
-      logger.warn('Login failed: Invalid password', { email });
+      logger.warn('Login failed: Invalid password', { email, ip });
+      alerting.alertAuthenticationFailure(ip, 1);
       return res.status(401).json({
         message: 'Invalid credentials',
       });
     }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET);
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
