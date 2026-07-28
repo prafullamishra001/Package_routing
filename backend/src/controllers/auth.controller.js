@@ -22,6 +22,8 @@ async function registerUser(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
     logger.info('User registered successfully', { userId: user._id, email });
@@ -69,6 +71,8 @@ async function loginUser(req, res) {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
+      path: '/',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
     });
 
     logger.info('User logged in successfully', { userId: user._id, email });

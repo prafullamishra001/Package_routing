@@ -3,7 +3,8 @@ const logger = require('../utils/logger');
 
 const authenticate = (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    // Try to get token from cookie first, then Authorization header
+    const token = req.cookies.token || req.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
       logger.warn('Authentication failed: No token provided');

@@ -9,7 +9,6 @@ const { errorHandler, notFoundHandler } = require('./middleware/error.middleware
 
 const app = express();
 app.set("trust proxy", 1);
-app.use(helmet());
 app.use(cors({
   origin: [
     'http://localhost:5173',
@@ -17,6 +16,10 @@ app.use(cors({
     process.env.FRONTEND_URL
   ].filter(Boolean),
   credentials: true,
+}));
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  contentSecurityPolicy: false,
 }));
 
 const limiter = rateLimit({
